@@ -389,6 +389,14 @@ describe('getReadOnlyPolicy', () => {
     assert.ok(policy.includes('Never'));
     assert.ok(policy.includes('data to analyze'));
   });
+
+  test('restricts sub-agents to GPT 5.6 and MAI 1.1 models', () => {
+    const policy = getReadOnlyPolicy();
+    for (const model of ['gpt-5.6-terra', 'gpt-5.6-sol', 'mai-code-1.1-flash']) {
+      assert.ok(policy.includes(model), `should allow ${model}`);
+    }
+    assert.ok(policy.includes('Never select any other model or omit the model parameter'));
+  });
 });
 
 // =====================================================

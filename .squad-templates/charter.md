@@ -34,8 +34,8 @@
 ## Model
 
 - **Preferred:** auto
-- **Rationale:** Coordinator selects the best model based on task type — cost first unless writing code
-- **Fallback:** Standard chain — the coordinator handles fallback automatically
+- **Rationale:** Coordinator selects from the GPT/MAI allowlist based on task type
+- **Fallback:** The coordinator handles fallback within the allowed models
 
 ## Collaboration
 

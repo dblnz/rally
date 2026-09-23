@@ -627,9 +627,10 @@ describe('buildReviewPrompt', () => {
   test('mentions parallel sub-agents with specific models', () => {
     const pr = makePr();
     const prompt = buildReviewPrompt({ ...pr, number: 42 });
-    assert.ok(prompt.toLowerCase().includes('opus'), 'should mention opus model');
-    assert.ok(prompt.toLowerCase().includes('gpt'), 'should mention gpt model');
-    assert.ok(prompt.toLowerCase().includes('gemini'), 'should mention gemini model');
+    for (const model of ['gpt-5.6-terra', 'gpt-5.6-sol', 'mai-code-1.1-flash']) {
+      assert.ok(prompt.includes(model), `should mention ${model}`);
+    }
+    assert.ok(!/claude|gemini|grok/i.test(prompt), 'should only request GPT and MAI models');
     assert.ok(prompt.includes('parallel'), 'should mention parallel execution');
   });
 
