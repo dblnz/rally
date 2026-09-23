@@ -23,17 +23,17 @@ describe('checkDockerSandboxAvailable', () => {
 // =====================================================
 
 describe('checkCopilotAvailable', () => {
-  test('returns true when gh copilot is installed', () => {
-    const exec = () => 'gh copilot help output';
+  test('returns true when copilot is installed', () => {
+    const exec = () => 'copilot help output';
     assert.strictEqual(checkCopilotAvailable({ _exec: exec }), true);
   });
 
-  test('returns false when gh copilot is not installed', () => {
+  test('returns false when copilot is not installed', () => {
     const exec = () => { throw new Error('unknown command "copilot"'); };
     assert.strictEqual(checkCopilotAvailable({ _exec: exec }), false);
   });
 
-  test('returns false when gh is not installed', () => {
+  test('returns false when copilot executable is not installed', () => {
     const exec = () => {
       throw Object.assign(new Error('spawn ENOENT'), { code: 'ENOENT' });
     };
@@ -47,8 +47,8 @@ describe('checkCopilotAvailable', () => {
       return '';
     };
     checkCopilotAvailable({ _exec: exec });
-    assert.strictEqual(captured.cmd, 'gh');
-    assert.deepStrictEqual(captured.args, ['copilot', '--help']);
+    assert.strictEqual(captured.cmd, 'copilot');
+    assert.deepStrictEqual(captured.args, ['--help']);
     assert.strictEqual(captured.opts.stdio, 'pipe');
   });
 });
@@ -58,7 +58,7 @@ describe('checkCopilotAvailable', () => {
 // =====================================================
 
 describe('launchCopilot', () => {
-  test('spawns gh copilot with deny-tool flags and policy in prompt', () => {
+  test('spawns copilot with deny-tool flags and policy in prompt', () => {
     let captured;
     const mockSpawn = (cmd, args, opts) => {
       captured = { cmd, args, opts };
@@ -67,7 +67,7 @@ describe('launchCopilot', () => {
 
     launchCopilot('/path/to/worktree', 'my prompt', { _spawn: mockSpawn });
 
-    assert.strictEqual(captured.cmd, 'gh');
+    assert.strictEqual(captured.cmd, 'copilot');
     // Verify --allow-all-tools is present
     assert.ok(captured.args.includes('--allow-all-tools'));
     // Verify all deny-tool flags are present
@@ -454,15 +454,15 @@ describe('parseSessionIdFromLog', () => {
 // =====================================================
 
 describe('resumeCopilot', () => {
-  test('calls gh copilot --resume with session ID', () => {
+  test('calls copilot --resume with session ID', () => {
     let captured;
     const mockSpawnSync = (cmd, args, opts) => {
       captured = { cmd, args, opts };
       return { status: 0 };
     };
     resumeCopilot('/tmp/worktree', 'abc-123', { _spawnSync: mockSpawnSync });
-    assert.strictEqual(captured.cmd, 'gh');
-    assert.deepStrictEqual(captured.args, ['copilot', '--resume', 'abc-123']);
+    assert.strictEqual(captured.cmd, 'copilot');
+    assert.deepStrictEqual(captured.args, ['--resume', 'abc-123']);
     assert.strictEqual(captured.opts.cwd, '/tmp/worktree');
   });
 
@@ -473,7 +473,7 @@ describe('resumeCopilot', () => {
       return { status: 0 };
     };
     resumeCopilot('/tmp/worktree', null, { _spawnSync: mockSpawnSync });
-    assert.deepStrictEqual(captured.args, ['copilot', '--resume']);
+    assert.deepStrictEqual(captured.args, ['--resume']);
   });
 
   test('resumeCopilot passes message option as -p flag', () => {
@@ -483,14 +483,14 @@ describe('resumeCopilot', () => {
       return { status: 0 };
     };
     resumeCopilot('/tmp/wt', 'sess-1', { message: 'hello', _spawnSync: mockSpawnSync });
-    assert.deepStrictEqual(captured.args, ['copilot', '--resume', 'sess-1', '-p', 'hello']);
+    assert.deepStrictEqual(captured.args, ['--resume', 'sess-1', '-p', 'hello']);
   });
 
   test('throws user-friendly error on ENOENT', () => {
     const mockSpawnSync = () => ({ error: { code: 'ENOENT' } });
     assert.throws(
       () => resumeCopilot('/tmp/wt', 'sess-1', { _spawnSync: mockSpawnSync }),
-      /gh CLI not found/
+      /Copilot CLI not found/
     );
   });
 

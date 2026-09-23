@@ -88,7 +88,7 @@ function createExecWithPr(prData) {
       }
       return JSON.stringify(prData);
     }
-    if (cmd === 'gh' && args[0] === 'copilot') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       return ''; // Copilot is "available" in tests
     }
     // Simulate gh pr checkout --detach — in tests, fetch the PR branch and reset
@@ -394,7 +394,7 @@ describe('dispatchPr error paths', () => {
         }), 'utf8');
         return JSON.stringify(pr);
       }
-      if (cmd === 'gh' && args[0] === 'copilot') return '';
+      if (cmd === 'copilot' && args[0] === '--help') return '';
       return execFileSync(cmd, args, opts);
     };
 
@@ -785,7 +785,7 @@ describe('dispatchPr with custom prompt file', () => {
       if (cmd === 'gh' && args[0] === 'pr' && args[1] === 'view') {
         return JSON.stringify(pr);
       }
-      if (cmd === 'gh' && args[0] === 'copilot') {
+      if (cmd === 'copilot' && args[0] === '--help') {
         return '';
       }
       if (cmd === 'gh' && args[0] === 'pr' && args[1] === 'checkout' && args.includes('--detach')) {

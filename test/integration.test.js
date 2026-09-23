@@ -91,7 +91,7 @@ function createExecWithIssue(issueData) {
       }
       return JSON.stringify(issueData);
     }
-    if (cmd === 'gh' && args[0] === 'copilot') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       return '';
     }
     return execFileSync(cmd, args, opts);
@@ -109,7 +109,7 @@ function createExecWithPr(prData) {
       }
       return JSON.stringify(prData);
     }
-    if (cmd === 'gh' && args[0] === 'copilot') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       return '';
     }
     // Simulate gh pr checkout --detach — in tests, just fetch the PR branch

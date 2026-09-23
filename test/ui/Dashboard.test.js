@@ -468,7 +468,7 @@ describe('Dashboard component', () => {
     assert.ok(output.includes('Rally Dashboard'), 'dashboard should still be visible after x');
   });
 
-  it('v shortcut spawns both code and gh copilot when session is a UUID', async () => {
+  it('v shortcut spawns both code and copilot when session is a UUID', async () => {
     const dispatches = makeSampleDispatches();
     dispatches[0].session_id = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
     writeFileSync(join(TEST_DIR, 'active.yaml'), yaml.dump({ dispatches }), 'utf8');
@@ -487,8 +487,7 @@ describe('Dashboard component', () => {
     await delay();
     assert.equal(spawnedCmds.length, 2, 'should spawn two processes');
     assert.equal(spawnedCmds[0].cmd, 'code', 'first spawn should be VS Code');
-    assert.equal(spawnedCmds[1].cmd, 'gh', 'second spawn should be gh');
-    assert.ok(spawnedCmds[1].args.includes('copilot'), 'should include copilot arg');
+    assert.equal(spawnedCmds[1].cmd, 'copilot', 'second spawn should be copilot');
     assert.ok(spawnedCmds[1].args.includes('--resume'), 'should include --resume arg');
     assert.ok(spawnedCmds[1].args.includes('a1b2c3d4-e5f6-7890-abcd-ef1234567890'), 'should include session ID');
   });

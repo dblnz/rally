@@ -13,6 +13,7 @@ Rally is for individual developers using [Squad](https://bradygaster.github.io/s
 - Node.js >= 20.0.0
 - [git](https://git-scm.com/)
 - [GitHub CLI (`gh`)](https://cli.github.com/)
+- [GitHub Copilot CLI (`copilot`)](https://github.com/github/copilot-cli)
 
 ## Installation
 

@@ -67,7 +67,7 @@ function createExecWithIssue(issueData, { dirty = false } = {}) {
     if (cmd === 'gh' && args[0] === 'issue' && args[1] === 'view') {
       return JSON.stringify(issueData);
     }
-    if (cmd === 'gh' && args[0] === 'copilot') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       return '';
     }
     if (cmd === 'git' && args[0] === 'status' && args[1] === '--porcelain') {

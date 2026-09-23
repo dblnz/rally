@@ -24,6 +24,7 @@ It automates the full Squad workflow — from GitHub issues to pull requests —
 - Node.js >= 20.0.0
 - [git](https://git-scm.com/)
 - [GitHub CLI (`gh`)](https://cli.github.com/)
+- [GitHub Copilot CLI (`copilot`)](https://github.com/github/copilot-cli)
 
 ## Next Steps
 

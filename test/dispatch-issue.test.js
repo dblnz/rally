@@ -75,7 +75,7 @@ function createExecWithIssue(issueData) {
       }
       return JSON.stringify(issueData);
     }
-    if (cmd === 'gh' && args[0] === 'copilot') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       return ''; // Copilot is "available" in tests
     }
     // Delegate git commands to real git
@@ -237,7 +237,7 @@ describe('dispatchIssue error paths', () => {
         }), 'utf8');
         return JSON.stringify(issue);
       }
-      if (cmd === 'gh' && args[0] === 'copilot') return '';
+      if (cmd === 'copilot' && args[0] === '--help') return '';
       return execFileSync(cmd, args, opts);
     };
 
@@ -485,8 +485,8 @@ describe('dispatchIssue happy path', () => {
       if (cmd === 'gh' && args[0] === 'issue' && args[1] === 'view') {
         return JSON.stringify(issue);
       }
-      if (cmd === 'gh' && args[0] === 'copilot') {
-        throw new Error('gh copilot not installed');
+      if (cmd === 'copilot' && args[0] === '--help') {
+        throw new Error('copilot not installed');
       }
       return execFileSync(cmd, args, opts);
     };

@@ -48,11 +48,11 @@ function setupRallyHome() {
 }
 
 /**
- * Creates a mock _exec that responds to gh copilot and docker sandbox checks.
+ * Creates a mock _exec that responds to Copilot CLI and docker sandbox checks.
  */
 function makeCopilotExec({ copilotAvailable = false, dockerSandboxAvailable = false } = {}) {
   return (cmd, args, opts) => {
-    if (cmd === 'gh' && args[0] === 'copilot' && args[1] === '--help') {
+    if (cmd === 'copilot' && args[0] === '--help') {
       if (!copilotAvailable) throw new Error('unknown command "copilot"');
       return '';
     }
@@ -127,7 +127,7 @@ describe('setupDispatchWorktree Copilot launch', () => {
     assert.ok(result.sessionId);
   });
 
-  test('uses gh copilot spawn when no --sandbox and Copilot available', () => {
+  test('uses copilot spawn when no --sandbox and Copilot available', () => {
     setupRallyHome();
     let spawnArgs;
     const exec = makeCopilotExec({ copilotAvailable: true });
@@ -141,8 +141,8 @@ describe('setupDispatchWorktree Copilot launch', () => {
       _spawn: spawn,
     }));
 
-    assert.strictEqual(spawnArgs.cmd, 'gh');
-    assert.strictEqual(spawnArgs.args[0], 'copilot');
+    assert.strictEqual(spawnArgs.cmd, 'copilot');
+    assert.ok(spawnArgs.args.includes('--allow-all-tools'));
     assert.ok(result.sessionId);
   });
 

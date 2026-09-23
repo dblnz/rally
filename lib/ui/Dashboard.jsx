@@ -170,8 +170,8 @@ export default function Dashboard({ project, onSelect, onAttachSession, onDispat
       if (parsed) sessionId = parsed;
     }
     if (sessionId && sessionId !== 'pending' && UUID_RE.test(sessionId)) {
-      const copilotChild = _spawn('gh', [
-        'copilot', '--resume', sessionId,
+      const copilotChild = _spawn('copilot', [
+        '--resume', sessionId,
         '-p', '/ide',
         '--allow-all',
       ], {

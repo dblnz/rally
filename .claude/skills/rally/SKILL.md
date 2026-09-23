@@ -11,8 +11,8 @@ Rally is a CLI tool that dispatches AI agents (via GitHub Copilot CLI) to work o
 
 - **Node.js** ≥ 20
 - **git** — for worktree management
-- **gh** (GitHub CLI) — for fetching issues/PRs and launching Copilot
-- **gh copilot** extension — for AI agent sessions
+- **gh** (GitHub CLI) — for fetching issues/PRs
+- **copilot** (GitHub Copilot CLI) — for AI agent sessions
 
 Install Rally globally:
 
@@ -76,7 +76,7 @@ What happens:
 3. Creates worktree at `<repo>/.worktrees/rally-<number>/`
 4. Symlinks `.squad/` into the worktree
 5. Writes `dispatch-context.md` with issue title, body, labels
-6. Launches `gh copilot` with a prompt to read context and implement a fix
+6. Launches `copilot` with a prompt to read context and implement a fix
 7. Registers the dispatch in `active.yaml`
 
 ### Dispatch to a PR (code review)
